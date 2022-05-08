@@ -25,6 +25,6 @@ The application allows customers to reserve a room. Here are the specifics:
 
 1. <b>Avoid conflicting reservations</b>: A single room may only be reserved by a single customer per a checkin and checkout date range.
 2. <b>Search for recommended rooms</b>: If there are no available rooms for the customer's date range, a search will be performed that displays recommended rooms on alternative dates. The recommended room search will add seven days to the original checkin and checkout dates to see if the hotel has any availabilities, and then display the recommended rooms/dates to the customer.
-> Example: If the customers date range search is 1/1/2022 – 1/5/2022 and all rooms are booked, the system will search again for recommended rooms using the date range 1/8/2022 - 1/12/2022. If there are no recommended rooms, the system will not return any rooms.
+
 
 
