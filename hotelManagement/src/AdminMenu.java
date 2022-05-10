@@ -4,10 +4,13 @@ import java.util.Scanner;
 public class AdminMenu {
 
     private static final AdminResource adminResource = AdminResource.getSingleton();
+    private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * This method handles the admin actions
+     */
     public static void adminMenu() {
         String line;
-        final Scanner scanner = new Scanner(System.in);
 
         try {
             do {
@@ -32,6 +35,10 @@ public class AdminMenu {
         }
     }
 
+    /**
+     * This method prints the admin menu
+     * which shows his actions as an admin
+     */
     private static void printMenu() {
         System.out.print("""
 
@@ -47,17 +54,20 @@ public class AdminMenu {
                 """);
     }
 
+    /**
+     * This method asks for information about
+     * a room and adds it to the list.
+     */
     private static void addRoom() {
-        final Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter room number:");
         final String roomNumber = scanner.nextLine();
 
         System.out.println("Enter price per night:");
-        final double roomPrice = enterRoomPrice(scanner);
+        final double roomPrice = enterRoomPrice();
 
         System.out.println("Enter room type: 1 for single bed, 2 for double bed:");
-        final RoomType roomType = enterRoomType(scanner);
+        final RoomType roomType = enterRoomType();
 
         final Room room = new Room(roomNumber, roomPrice, roomType);
 
@@ -68,27 +78,42 @@ public class AdminMenu {
         addAnotherRoom();
     }
 
-    private static double enterRoomPrice(final Scanner scanner) {
+    /**
+     * This method ask for the price of
+     * the room.
+     * @return price of the room
+     */
+    private static double enterRoomPrice() {
+        Scanner scanner = new Scanner(System.in);
         try {
             return Double.parseDouble(scanner.nextLine());
         } catch (NumberFormatException exp) {
             System.out.println("Invalid room price! Please, enter a valid double number. " +
                     "Decimals should be separated by point (.)");
-            return enterRoomPrice(scanner);
+            return enterRoomPrice();
         }
     }
 
-    private static RoomType enterRoomType(final Scanner scanner) {
+    /**
+     * This gets the type of the bed
+     * for the room that you want to create.
+     * @return room type
+     */
+    private static RoomType enterRoomType() {
         try {
             return RoomType.valueOfLabel(scanner.nextLine());
         } catch (IllegalArgumentException exp) {
             System.out.println("Invalid room type! Please, choose 1 for single bed or 2 for double bed:");
-            return enterRoomType(scanner);
+            return enterRoomType();
         }
     }
 
+    /**
+     * This method checks if/ ask the user
+     * wants to add another room and calls
+     * the method to do that.
+     */
     private static void addAnotherRoom() {
-        final Scanner scanner = new Scanner(System.in);
 
         try {
             String anotherRoom;
@@ -113,6 +138,9 @@ public class AdminMenu {
         }
     }
 
+    /**
+     * This method displays all rooms
+     */
     private static void displayAllRooms() {
         Collection<Room> rooms = adminResource.getAllRooms();
 
@@ -123,6 +151,10 @@ public class AdminMenu {
         }
     }
 
+    /**
+     * This method displays all customers
+     * for the admin.
+     */
     private static void displayAllCustomers() {
         Collection<Customer> customers = adminResource.getAllCustomers();
 
@@ -133,6 +165,10 @@ public class AdminMenu {
         }
     }
 
+    /**
+     * This method displays all
+     * reservations
+     */
     private static void displayAllReservations() {
         adminResource.displayAllReservations();
     }

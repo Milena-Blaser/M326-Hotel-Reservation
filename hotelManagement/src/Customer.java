@@ -16,6 +16,10 @@ public class Customer {
         this.email = email;
     }
 
+    /**
+     * Validates the email.
+     * @param email that needs the validation
+     */
     private void isValidEmail(final String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX_PATTERN);
 
@@ -28,7 +32,10 @@ public class Customer {
         return this.email;
     }
 
-    @Override
+    /**
+     * This method gets all user information
+     * @return user's information
+     */
     public String toString() {
         return "First Name: " + this.firstName
                 + " Last Name: " + this.lastName

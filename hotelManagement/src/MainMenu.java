@@ -8,6 +8,10 @@ public class MainMenu {
     private static final String DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
     private static final HotelResource hotelResource = HotelResource.getSingleton();
 
+    /**
+     * Has all User's action and connects it with the
+     * following methods.
+     */
     public static void mainMenu() {
         String line;
         Scanner scanner = new Scanner(System.in);
@@ -35,6 +39,11 @@ public class MainMenu {
         }
     }
 
+    /**
+     * This method handles user's input to
+     * book a room and calls the needed methods
+     * to reservate the room.
+     */
     private static void findAndReserveRoom() {
         final Scanner scanner = new Scanner(System.in);
 
@@ -69,6 +78,12 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Gets the user input for a date and catch the error
+     * when the user didn't follow instructions.
+     * @param scanner to get the users input
+     * @return
+     */
     private static Date getInputDate(final Scanner scanner) {
         try {
             return new SimpleDateFormat(DEFAULT_DATE_FORMAT).parse(scanner.nextLine());
@@ -76,10 +91,18 @@ public class MainMenu {
             System.out.println("Error: Invalid date.");
             findAndReserveRoom();
         }
-
         return null;
     }
 
+    /**
+     * Handles Input and Output and gets all
+     * data to reserve a room. It also checks
+     * if the user has account.
+     * @param scanner to get users input
+     * @param checkInDate date
+     * @param checkOutDate date
+     * @param rooms all rooms available
+     */
     private static void reserveRoom(final Scanner scanner, final Date checkInDate,
                                     final Date checkOutDate, final Collection<Room> rooms) {
         System.out.println("Would you like to book? y/n");
@@ -118,6 +141,10 @@ public class MainMenu {
         }
     }
 
+    /**
+     * prints all rooms
+     * @param rooms
+     */
     private static void printRooms(final Collection<Room> rooms) {
         if (rooms.isEmpty()) {
             System.out.println("No rooms found.");
@@ -126,6 +153,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Gets user and search for his reservations
+     */
     private static void seeMyReservation() {
         final Scanner scanner = new Scanner(System.in);
 
@@ -135,6 +165,10 @@ public class MainMenu {
         printReservations(hotelResource.getCustomersReservations(customerEmail));
     }
 
+    /**
+     * prints reservations of the user
+     * @param reservations
+     */
     private static void printReservations(final Collection<Reservation> reservations) {
         if (reservations == null || reservations.isEmpty()) {
             System.out.println("No reservations found.");
@@ -143,6 +177,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Gets user input to create an account.
+     */
     private static void createAccount() {
         final Scanner scanner = new Scanner(System.in);
 
@@ -165,6 +202,9 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Prints users actions.
+     */
     public static void printMainMenu()
     {
         System.out.print("""

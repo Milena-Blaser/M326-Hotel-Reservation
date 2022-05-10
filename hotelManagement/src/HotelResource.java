@@ -19,6 +19,12 @@ public class HotelResource {
         return customerService.getCustomer(email);
     }
 
+    /**
+     * Adds customer to the customer list
+     * @param email of the user
+     * @param firstName of the user
+     * @param lastName of the user
+     */
     public void createACustomer(String email, String firstName, String lastName) {
         customerService.addCustomer(email, firstName, lastName);
     }
@@ -27,10 +33,24 @@ public class HotelResource {
         return reservationService.getARoom(roomNumber);
     }
 
+    /**
+     * This method books the room.
+     * @param customerEmail
+     * @param room which is booked
+     * @param checkInDate date of the checkin
+     * @param checkOutDate date of the checkout
+     * @return reservation of the room
+     */
     public Reservation bookARoom(String customerEmail, Room room, Date checkInDate, Date checkOutDate) {
         return reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
     }
 
+    /**
+     * This methods gets the reservation
+     * of the especific user
+     * @param customerEmail user's mail
+     * @return all reservations of the user
+     */
     public Collection<Reservation> getCustomersReservations(String customerEmail) {
         final Customer customer = getCustomer(customerEmail);
 
