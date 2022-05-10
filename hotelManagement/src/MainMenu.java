@@ -113,34 +113,41 @@ public class MainMenu {
             final String haveAccount = scanner.nextLine();
 
             if ("y".equals(haveAccount)) {
-                System.out.println("Enter Email format: name@domain.com");
-                final String customerEmail = scanner.nextLine();
+               chooseRoomForReservation(scanner, checkInDate, checkOutDate, rooms);
 
-                if (hotelResource.getCustomer(customerEmail) == null) {
-                    System.out.println("Customer not found.\nYou may need to create a new account.");
-                } else {
-                    System.out.println("What room number would you like to reserve?");
-                    final String roomNumber = scanner.nextLine();
-
-                    if (rooms.stream().anyMatch(room -> room.getRoomNumber().equals(roomNumber))) {
-                        final Room room = hotelResource.getRoom(roomNumber);
-
-                        final Reservation reservation = hotelResource
-                                .bookARoom(customerEmail, room, checkInDate, checkOutDate);
-                        System.out.println("Reservation created successfully!");
-                        System.out.println(reservation);
-                    } else {
-                        System.out.println("Error: room number not available.\nStart reservation again.");
-                    }
-                }
             } else {
                 System.out.println("Please, create an account.");
+                createAccount();
+                chooseRoomForReservation(scanner, checkInDate, checkOutDate, rooms);
             }
         } else if (!"n".equals(bookRoom)){
             reserveRoom(scanner, checkInDate, checkOutDate, rooms);
         }
     }
+private static void chooseRoomForReservation(final Scanner scanner, final Date checkInDate,
+                                             final Date checkOutDate, final Collection<Room> rooms){
+    System.out.println("Enter Email format: name@domain.com");
+    final String customerEmail = scanner.nextLine();
 
+    if (hotelResource.getCustomer(customerEmail) == null) {
+        System.out.println("Customer not found.\nYou may need to create a new account.");
+        createAccount();
+    } else {
+        System.out.println("What room number would you like to reserve?");
+        final String roomNumber = scanner.nextLine();
+
+        if (rooms.stream().anyMatch(room -> room.getRoomNumber().equals(roomNumber))) {
+            final Room room = hotelResource.getRoom(roomNumber);
+
+            final Reservation reservation = hotelResource
+                    .bookARoom(customerEmail, room, checkInDate, checkOutDate);
+            System.out.println("Reservation created successfully!");
+            System.out.println(reservation);
+        } else {
+            System.out.println("Error: room number not available.\nStart reservation again.");
+        }
+    }
+}
     /**
      * prints all rooms
      * @param rooms
