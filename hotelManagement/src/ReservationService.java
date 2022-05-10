@@ -32,6 +32,14 @@ public class ReservationService {
         return rooms.values();
     }
 
+    /**
+     * Reserves the room and add its to the reservations of the hotel.
+     * @param customer which books the room
+     * @param room which the customer wants to book
+     * @param checkInDate date of the checkin
+     * @param checkOutDate date of the checkout
+     * @return the reservation
+     */
     public Reservation reserveARoom(final Customer customer, final Room room,
                                     final Date checkInDate, final Date checkOutDate) {
         final Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
@@ -48,14 +56,32 @@ public class ReservationService {
         return reservation;
     }
 
+    /**
+     * Gets room for the wished dates
+     * @param checkInDate date
+     * @param checkOutDate date
+     * @return all rooms for this dates
+     */
     public Collection<Room> findRooms(final Date checkInDate, final Date checkOutDate) {
         return findAvailableRooms(checkInDate, checkOutDate);
     }
 
+    /**
+     * Finds alternative rooms for a similar date
+     * @param checkInDate
+     * @param checkOutDate
+     * @return
+     */
     public Collection<Room> findAlternativeRooms(final Date checkInDate, final Date checkOutDate) {
         return findAvailableRooms(addDefaultPlusDays(checkInDate), addDefaultPlusDays(checkOutDate));
     }
 
+    /**
+     * Search for available rooms
+     * @param checkInDate date
+     * @param checkOutDate date
+     * @return all rooms available
+     */
     private Collection<Room> findAvailableRooms(final Date checkInDate, final Date checkOutDate) {
         final Collection<Reservation> allReservations = getAllReservations();
         final Collection<Room> notAvailableRooms = new LinkedList<>();
@@ -71,6 +97,11 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Add to the date default dates
+     * @param date wished date
+     * @return new date (aktualisiert um paar tagen)
+     */
     public Date addDefaultPlusDays(final Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -79,16 +110,32 @@ public class ReservationService {
         return calendar.getTime();
     }
 
+    /**
+     * Checks if a reservation overlaps with the
+     * checkin and checkout date for another reservation
+     * @param reservation reservation
+     * @param checkInDate date
+     * @param checkOutDate date
+     * @return false when it overlaps
+     */
     private boolean reservationOverlaps(final Reservation reservation, final Date checkInDate,
                                         final Date checkOutDate){
         return checkInDate.before(reservation.getCheckOutDate())
                 && checkOutDate.after(reservation.getCheckInDate());
     }
 
+    /**
+     * gets customer reservation
+     * @param customer
+     * @return
+     */
     public Collection<Reservation> getCustomersReservation(final Customer customer) {
         return reservations.get(customer.getEmail());
     }
 
+    /**
+     * Displays all reservation
+     */
     public void printAllReservation() {
         final Collection<Reservation> reservations = getAllReservations();
 
@@ -101,6 +148,10 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Gets all reservation
+     * @return the reservation
+     */
     private Collection<Reservation> getAllReservations() {
         final Collection<Reservation> allReservations = new LinkedList<>();
 
